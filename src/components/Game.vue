@@ -5,11 +5,13 @@
 </template>
 
 <script>
-import Algebra from "ganja.js"
+//import Algebra from "ganja.js"
+import Game from '@/tools/Game'
 
 export default {
   name: 'Game',
   mounted() {
+      /*
         let algebra = Algebra(2,0,1)
 
         let calc = algebra.inline(() => {
@@ -23,9 +25,9 @@ export default {
                 0x007700, [1e12-1e01,1e12-1e01+1e02,1e12], 0x000000, "polygon"
             ]
         })
-        let graph = algebra.graph(calc())
-        console.log(graph)
-        document.getElementById("graph").appendChild(graph)
+        let graph = algebra.graph(calc())*/
+        let game = new Game()
+        document.getElementById("graph").appendChild(game.graph())
   }
 }
 </script>
