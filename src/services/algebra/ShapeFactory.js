@@ -1,4 +1,4 @@
-class Shape {
+class ShapeFactory {
     
     #algebra;
 
@@ -21,4 +21,4 @@ class Shape {
           })(p, radius, subd, range, offset) }
 }
 
-module.exports = Shape
+module.exports = ShapeFactory
