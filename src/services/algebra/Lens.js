@@ -20,19 +20,13 @@ class ThinLens {
     intersect(ray) { return this.algebra.inline((lens, ray)=>
         {
 
-            // The plane of the lens
             var lensPlane    = (lens.point1 & lens.point2);
-            // The intersection point with the ray
             var p         = Element.Wedge(lensPlane, ray[0]).Normalized;
             p = p*p.e12;
-            // The midpoint, length, and intersection check. (includes 'front ray test')
             var midpoint  = (lens.point1 + lens.point2)/2;
             var length    = (lens.point1 & lens.point2).Length;
-            // Figure out if the mirrors is hit in its segment, with the 'forward' ray
             var intersect = (lensPlane|ray[1]|ray[0]).s * (ray[1]&lensPlane).s > 0 && (midpoint & p).Length < length/2;
-            // Now figure out if the focal point is on the front as seen from the ray.
             var focalfront = Element.Wedge(lens.lens,lens.point3).e012 * Element.Wedge(lens.lens,ray[1]).e012 > 0;
-            // Also figure out the focal lenth (signed!)
             var focalpositive = (lens.lens^lens.point3).e012 > 0; 
             if (intersect) {
                 var p3 = focalfront==focalpositive ? lens.point3 : Element.sw(lens.lens, lens.point3);

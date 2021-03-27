@@ -23,15 +23,11 @@ class SphereGoal {
     getOpacity = () => { return (this.touch)?"1":"0.5" }
     intersect(ray) { return this.algebra.inline((goal, ray) => {
             if(ray[2] == undefined) ray[2] = false
-            // The distance of the center to the ray.
             var dist      = Math.abs(!Element.Wedge(goal.point.Normalized, ray[0].Normalized));
-            // See if that is within the radius.
             var intersect = (dist < goal.radius);
-            // Temporary point where the ray cuts the line orthogonal to the ray, through the point.
             var temp1     = Element.Normalize((Element.Wedge((Element.Mul(ray[0],goal.point)),ray[0])));
             temp1 = temp1 * temp1.e12;
 
-            // The intersection point, using pythagoras and a translator
             var i_point    = Element.sw((1+(ray[2]?1:-1)*Math.abs(goal.radius**2 - dist**2)**.5*ray[0]*.5e012), temp1);
             var sameside  = (ray[0]|(ray[1]&i_point)).s > 0;
 
@@ -39,7 +35,6 @@ class SphereGoal {
                 //if(ray[3] == goal.color) goal.touch = true;
                 return [ true, (ray[1] & i_point).Length, i_point, -1];
             }
-            // Return distance, intersection point and new ray.
             return [ false, (ray[1] & i_point).Length, i_point ];
         })(this, ray)
     }
